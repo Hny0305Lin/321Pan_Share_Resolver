@@ -10,11 +10,20 @@
 
 1. 打开解析器
 2. 登录账号，以防止被拦截
-3. 复制链接中的 `s` 后面的字符串，如 `1d8a-3zj9`；或直接粘贴 `https://www.123pan.com/s/1d8a-3zj9`
+3. 复制链接中的 `s` 后面的字符串，如 `1d8a-3zj9`；或直接粘贴 `https://www.321pan.com/s/1d8a-3zj9`
 4. 点击 `获取分享文件列表` 按钮
 5. 等待获取
 6. 勾选需要下载的文件，点击 `获取勾选文件的下载链接` 按钮
 7. 可以选择复制或直接打开
+
+### API 调用
+[api.what-the-fuck.sbs](https://api.what-the-fuck.sbs) 目前已经可用
+
+/get-link?config=[base64 encoded], 内容为一个文件的参数类似下面的内容
+
+```json
+{"FileId":1111,"FileName":"sss.aaa","Type":0,"Size":111,"ContentType":"0","S3KeyFlag":"1111","CreateAt":"2021-11-11T01:05:27+08:00","UpdateAt":"2023-05-27T10:12:17+08:00","Etag":"11111","DownloadUrl":"","Status":2,"ParentFileId":1111,"Category":0,"PunishFlag":0,"StorageNode":"m4","PreviewType":0}
+```
 
 ## 注意事项
 

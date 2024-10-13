@@ -1,4 +1,4 @@
-import type { ApiResponse, DirOptions, FileInfo, Headers } from '../types'
+import type { ApiResponse, DirOptions, FileInfo, Headers } from './types'
 
 export class FileExplorer {
   private loggedHeader: Headers
@@ -41,41 +41,36 @@ export class FileExplorer {
 
     const url = `${this.baseUrl}?${new URLSearchParams(params).toString()}`
 
-    try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: this.loggedHeader,
-      })
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: this.loggedHeader,
+    })
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
-      const data: ApiResponse = await response.json()
+    const data: ApiResponse = await response.json()
 
-      if (data.code !== 0) {
-        throw new Error(`API error! code: ${data.code}, message: ${data.message}`)
-      }
+    if (data.code !== 0) {
+      throw new Error(`API error! code: ${data.code}, message: ${data.message}`)
+    }
 
-      const fileList = data.data.InfoList
+    const fileList = data.data.InfoList
 
-      if (depth > 0) {
-        for (const file of fileList) {
-          if (file.Type === 1) {
-            file.ContainFiles = await this.getDir({
-              ...options,
-              parentFileId: file.FileId,
-              depth: depth - 1,
-            })
-          }
+    if (depth > 0) {
+      for (const file of fileList) {
+        if (file.Type === 1) {
+          file.ContainFiles = await this.getDir({
+            ...options,
+            parentFileId: file.FileId,
+            depth: depth - 1,
+          })
         }
       }
+    }
 
-      return fileList
-    }
-    catch (error) {
-      console.error('Error in getDir:', error)
-      throw error
-    }
+    return fileList
+
   }
 }

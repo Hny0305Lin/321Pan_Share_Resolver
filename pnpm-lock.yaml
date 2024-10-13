@@ -8,6 +8,40 @@ importers:
 
   .:
     dependencies:
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
+      getter:
+        specifier: workspace:^
+        version: link:packages/getter
+      js-base64:
+        specifier: ^3.7.7
+        version: 3.7.7
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+
+  apps/api:
+    dependencies:
+      hono:
+        specifier: ^4.6.4
+        version: 4.6.4
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20241011.0
+        version: 4.20241011.0
+      wrangler:
+        specifier: ^3.79.0
+        version: 3.80.4(@cloudflare/workers-types@4.20241011.0)
+
+  apps/react:
+    dependencies:
       '@ant-design/icons':
         specifier: ^5.5.1
         version: 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -26,12 +60,9 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
       wrangler:
         specifier: ^3.80.4
-        version: 3.80.4
+        version: 3.80.4(@cloudflare/workers-types@4.20241011.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.11.1
@@ -72,6 +103,8 @@ importers:
       vite-plugin-compression:
         specifier: ^0.5.1
         version: 0.5.1(vite@5.4.8(@types/node@22.7.5))
+
+  packages/getter: {}
 
 packages:
 
@@ -251,6 +284,9 @@ packages:
   '@cloudflare/workers-shared@0.6.0':
     resolution: {integrity: sha512-rfUCvb3hx4AsvdUZsxgk9lmgEnQehqV3jdtXLP/Xr0+P56n11T/0nXNMzmn7Nnv+IJFOV6X9NmFhuMz4sBPw7w==}
     engines: {node: '>=16.7.0'}
+
+  '@cloudflare/workers-types@4.20241011.0':
+    resolution: {integrity: sha512-emwBnuFB/2lS1z6NXAeBqrSL8Xwnr7YpgdLuchOmgu/igqBsLLNPBb4Qmgh3neFWUe9wbzQyx030836YF3c3Xw==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1650,6 +1686,10 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
+  hono@4.6.4:
+    resolution: {integrity: sha512-T5WqBkTOcIQblqBKB5mpzaH/A+dSpvVe938xZJCHOmOuYfF7DSwE/9/10+BMvwSPq9N/f6LiQ38HxrZSQOsXKw==}
+    engines: {node: '>=16.9.0'}
+
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
 
@@ -1702,6 +1742,9 @@ packages:
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+
+  js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -2743,8 +2786,8 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
 
-  yaml@2.5.1:
-    resolution: {integrity: sha512-bLQOjaX/ADgQ20isPJRvF0iRUHIxVhYvr53Of7wGcWlO2jvtUlH5m87DsmulFVxRpNLOnI4tB6p/oh8D7kpn9Q==}
+  yaml@2.6.0:
+    resolution: {integrity: sha512-a6ae//JvKDEra2kdi1qzCyrJW/WZCgFi8ydDV+eXExl95t+5R+ijnqHJbz9tmMh8FUjx3iv2fCQ4dclAQlO2UQ==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -2972,6 +3015,8 @@ snapshots:
     dependencies:
       mime: 3.0.0
       zod: 3.23.8
+
+  '@cloudflare/workers-types@4.20241011.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -4415,6 +4460,8 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
+  hono@4.6.4: {}
+
   hosted-git-info@2.8.9: {}
 
   ignore@5.3.2: {}
@@ -4453,6 +4500,8 @@ snapshots:
   is-number@7.0.0: {}
 
   isexe@2.0.0: {}
+
+  js-base64@3.7.7: {}
 
   js-tokens@4.0.0: {}
 
@@ -5681,7 +5730,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20241004.0
       '@cloudflare/workerd-windows-64': 1.20241004.0
 
-  wrangler@3.80.4:
+  wrangler@3.80.4(@cloudflare/workers-types@4.20241011.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@cloudflare/workers-shared': 0.6.0
@@ -5701,6 +5750,7 @@ snapshots:
       workerd: 1.20241004.0
       xxhash-wasm: 1.0.2
     optionalDependencies:
+      '@cloudflare/workers-types': 4.20241011.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
@@ -5725,11 +5775,11 @@ snapshots:
     dependencies:
       eslint-visitor-keys: 3.4.3
       lodash: 4.17.21
-      yaml: 2.5.1
+      yaml: 2.6.0
 
   yaml@1.10.2: {}
 
-  yaml@2.5.1: {}
+  yaml@2.6.0: {}
 
   yargs-parser@21.1.1: {}
 
