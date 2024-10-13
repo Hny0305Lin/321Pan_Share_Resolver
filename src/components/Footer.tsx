@@ -14,7 +14,7 @@ const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       <Text strong>
         Powered by
         {' '}
-        <Link href="https://github.com/Hny0305Lin/Pan123_Share" target="_blank">
+        <Link href="https://github.com/Hny0305Lin/321Pan_Share_Resolver" target="_blank">
           Lin.Meng
         </Link>
         .
