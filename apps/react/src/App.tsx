@@ -1,4 +1,4 @@
-import type { FileInfo, Headers } from '../../../packages/getter/types'
+import type { FileInfo, Headers } from 'getter/types'
 import { LinkOutlined } from '@ant-design/icons'
 import { Button, message, Space, Spin, Switch, Typography } from 'antd'
 import { FileDownloader } from 'getter/FileDownloader'
@@ -7,6 +7,7 @@ import LoginManager from 'getter/Login'
 import { encode } from 'js-base64'
 import React, { Suspense, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import config from './config'
 import './App.css'
 
 const ShareKeyInput = React.lazy(() => import('./components/ShareLinkInput'))
@@ -18,6 +19,21 @@ const ArtPlums = React.lazy(() => import('./components/ArtPlums'))
 const TourButton = React.lazy(() => import('./components/Tour'))
 
 const { Title, Text } = Typography
+
+const BASE_HEADER = {
+  'user-agent': '123pan/v2.4.0(Android_7.1.2;Xiaomi)',
+  'accept-encoding': 'gzip',
+  'content-type': 'application/json',
+  'osversion': 'Android_7.1.2',
+  'loginuuid': uuidv4(),
+  'platform': 'android',
+  'devicetype': 'M2101K9C',
+  'x-channel': '1004',
+  'devicename': 'Xiaomi',
+  'host': 'www.123pan.com',
+  'app-version': '61',
+  'x-app-version': '2.4.0',
+}
 
 const App: React.FC = () => {
   const [shareKey, setShareKey] = useState<string>('')
@@ -36,25 +52,12 @@ const App: React.FC = () => {
   const fileListRef = useRef(null)
   const fetchDownloadLinksButtonRef = useRef(null)
   const downloadLinksRef = useRef(null)
-  const [headers, setHeaders] = useState<Headers>({
-    'user-agent': '123pan/v2.4.0(Android_7.1.2;Xiaomi)',
-    'accept-encoding': 'gzip',
-    'content-type': 'application/json',
-    'osversion': 'Android_7.1.2',
-    'loginuuid': uuidv4(),
-    'platform': 'android',
-    'devicetype': 'M2101K9C',
-    'x-channel': '1004',
-    'devicename': 'Xiaomi',
-    'host': 'www.123pan.com',
-    'app-version': '61',
-    'x-app-version': '2.4.0',
-  })
+  const [headers, setHeaders] = useState<Headers>(BASE_HEADER)
 
   const login = async () => {
     setLoading(true)
     try {
-      const loginManager = new LoginManager()
+      const loginManager = new LoginManager(BASE_HEADER, config.BASE_URL)
       const token = await loginManager.login(username, password)
       setHeaders(token)
       return true
@@ -71,7 +74,7 @@ const App: React.FC = () => {
 
   const fetchFiles = async () => {
     setLoading(true)
-    const explorer = new FileExplorer(headers)
+    const explorer = new FileExplorer(headers, config.BASE_URL)
     try {
       if (usePersonalAccount) {
         const loginSuccess = await login()
@@ -116,7 +119,7 @@ const App: React.FC = () => {
 
   const fetchDownloadLinks = async () => {
     setLoading(true)
-    const downloader = new FileDownloader(headers)
+    const downloader = new FileDownloader(headers, config.BASE_URL)
     const allSelectedFiles = getAllSelectedFiles(fileList, selectedFiles)
     try {
       const links = await Promise.all(
@@ -125,13 +128,30 @@ const App: React.FC = () => {
             const link = await downloader.link(file)
             return link
               ? (
-                  <Space key={file.FileId}>
-                    <Text>
-                      <Text mark>{file.FileName}</Text>
+                  <Space
+                    key={file.FileId}
+                  >
+                    <div style={{
+                      width: '100%',
+                      maxHeight: '16em',
+                      textOverflow: 'ellipsis',
+                      overflow: 'auto',
+                    }}
+                    >
+                      <Text
+                        mark
+                      >
+                        {file.FileName}
+                      </Text>
                       :
                       {' '}
-                      <Text copyable>{link}</Text>
-                    </Text>
+                      <Text
+                        copyable
+                      >
+                        {link}
+
+                      </Text>
+                    </div>
                     <Button
                       icon={<LinkOutlined />}
                       onClick={() => window.open(link, '_blank')}
@@ -142,7 +162,7 @@ const App: React.FC = () => {
                     <Button
                       icon={<LinkOutlined />}
                       onClick={() => {
-                        const directLink = `https://api.what-the-fuck.sbs/get-link?config=${encode(JSON.stringify(file))}`
+                        const directLink = `${config.API_URL || 'https://api.what-the-fuck.sbs'}/get-link?config=${encode(JSON.stringify(file))}`
 
                         navigator.clipboard.writeText(directLink).then(() => {
                           message.success(`直链已复制到剪贴板`)

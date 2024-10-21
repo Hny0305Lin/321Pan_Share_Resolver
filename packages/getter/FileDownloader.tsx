@@ -2,14 +2,14 @@ import type { ApiResponse, FileInfo, Headers } from './types'
 
 export class FileDownloader {
   private headerLogined: Headers
-  private baseUrl: string
+  private downRequestUrl: string
+
   constructor(headerLogined: Headers, baseUrl?: string) {
     this.headerLogined = headerLogined
-    this.baseUrl = baseUrl || 'https://www.123pan.com'
+    this.downRequestUrl = `${baseUrl || 'https://www.123pan.com'}/a/api/file/download_info`
   }
 
   async link(file: FileInfo): Promise<string | undefined> {
-    const downRequestUrl = `${this.baseUrl}/a/api/file/download_info`
     const downRequestData = {
       driveId: 0,
       etag: file.Etag,
@@ -20,7 +20,7 @@ export class FileDownloader {
       size: file.Size,
     }
 
-    const linkRes = await fetch(downRequestUrl, {
+    const linkRes = await fetch(this.downRequestUrl, {
       method: 'POST',
       headers: {
         ...this.headerLogined,

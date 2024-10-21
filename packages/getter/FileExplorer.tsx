@@ -4,9 +4,9 @@ export class FileExplorer {
   private loggedHeader: Headers
   private baseUrl: string
 
-  constructor(loggedHeader: Headers) {
+  constructor(loggedHeader: Headers, baseURL?: string) {
     this.loggedHeader = loggedHeader
-    this.baseUrl = 'https://www.123865.com/b/api/share/get'
+    this.baseUrl = `${baseURL || 'https://www.123pan.com'}/b/api/share/get`
   }
 
   async getDir(options: DirOptions): Promise<FileInfo[]> {

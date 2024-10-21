@@ -44,6 +44,13 @@ const FileList = forwardRef<HTMLDivElement, FileListProps>(({ fileList, selected
           )
         : (
             <Tree
+              style={
+                {
+                  height: '100%',
+                  maxWidth: '100%',
+                  overflow: 'auto',
+                }
+              }
               treeData={renderTreeNodes(fileList)}
               selectable={false}
               defaultExpandAll

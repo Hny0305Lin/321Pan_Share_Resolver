@@ -13,7 +13,8 @@ class LoginManager {
   private baseHeaders: Record<string, string>;
   private apiUrl: string;
 
-  constructor(baseHeaders?: Record<string, string>, apiUrl?: string) {
+  constructor(baseHeaders?: Record<string, string>, baseUrl?: string) {
+    // Cloudflare Worker 无法在未正常初始化类时使用 UUID v4
     this.baseHeaders = baseHeaders || {
       'user-agent': '123pan/v2.4.0(Android_7.1.2;Xiaomi)',
       'accept-encoding': 'gzip',
@@ -28,7 +29,7 @@ class LoginManager {
       'app-version': '61',
       'x-app-version': '2.4.0',
     };
-    this.apiUrl = apiUrl || 'https://www.123pan.com/b/api/user/sign_in';
+    this.apiUrl = `${baseUrl || 'https://www.123pan.com'}/b/api/user/sign_in`;
   }
 
   async login(username: string, password: string): Promise<Headers> {
