@@ -82,7 +82,7 @@ const App: React.FC = () => {
           throw new Error('Login failed')
         }
       }
-      const files = await explorer.getDir({ shareKey, sharePwd, depth: 2 })
+      const files = await explorer.getDir({ shareKey, sharePwd, depth: 10 })
       setFileList(files)
       message.success('成功拉取分享文件列表！')
     }
